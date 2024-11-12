@@ -1,0 +1,6 @@
+[dev]
+  port = 8888 # The port that the Netlify Dev will be accessible on
+  publish = "dist"
+
+[functions]
+  directory = "@netlify/functions"
