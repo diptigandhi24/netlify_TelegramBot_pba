@@ -10,7 +10,8 @@ async function postToDB(data) {
   console.log("message we receive from instagram", data);
 }
 export const handler: Handler = async (request) => {
-  let temp = await JSON.parse(request.body);
+  console.log("type of request", typeof request);
+  let temp = request.body;
   console.log("temp", typeof temp, temp.body.message);
   console.log("printing inside handler", request.body.update_id);
 
