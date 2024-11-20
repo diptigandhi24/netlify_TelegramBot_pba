@@ -7,10 +7,10 @@ const myColl = myDB.collection("parents_questions");
 
 // make a mondo db call
 async function postToDB(data) {
-  console.log("message we receive from instagram", data.body.message.text);
+  console.log("message we receive from instagram", data.body.message);
 }
 export const handler: Handler = async (request) => {
-  console.log("printing inside handler", request, request.body.message.text);
+  console.log("printing inside handler", request, request.body);
   postToDB(request);
   return {
     statusCode: 200,
