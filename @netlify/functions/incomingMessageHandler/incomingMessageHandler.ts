@@ -11,10 +11,9 @@ async function postToDB(data) {
 }
 export const handler: Handler = async (request) => {
   let temp = JSON.parse(request.body);
-  console.log("temp", typeof temp, temp);
-  console.log("printing inside handler", temp.message);
+  console.log("printing inside handler", temp.message.text);
 
-  postToDB(request.body);
+  postToDB(temp.message);
   return {
     statusCode: 200,
   };
