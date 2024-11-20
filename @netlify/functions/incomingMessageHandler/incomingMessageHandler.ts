@@ -12,7 +12,7 @@ async function postToDB(data) {
 export const handler: Handler = async (request) => {
   let temp = request.body;
   console.log("printing inside handler", request.body.update_id);
-  console.log("temp", temp.message);
+  console.log("temp", typeof temp);
 
   postToDB(request.body);
   return {
