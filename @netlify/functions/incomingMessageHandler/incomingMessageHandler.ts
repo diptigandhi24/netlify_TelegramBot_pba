@@ -10,13 +10,8 @@ async function postToDB(data) {
   console.log("message we receive from instagram", data);
 }
 export const handler: Handler = async (request) => {
-  console.log("printing inside handler", request.body);
-  let jsonparse = JSON.parse(request.body);
-  console.log(
-    "before calling postToDB",
-    jsonparse.body.message,
-    jsonparse.body
-  );
+  console.log("printing inside handler", request.body.message);
+
   postToDB(request.body);
   return {
     statusCode: 200,
