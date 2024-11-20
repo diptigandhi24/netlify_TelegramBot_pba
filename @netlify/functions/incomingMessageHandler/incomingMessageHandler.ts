@@ -11,7 +11,7 @@ async function postToDB(data) {
 }
 export const handler: Handler = async (request) => {
   console.log("printing inside handler", request.body);
-  let jsonparse = JSON.parse(request);
+  let jsonparse = JSON.parse(request.body);
   console.log(
     "before calling postToDB",
     jsonparse.body.message,
