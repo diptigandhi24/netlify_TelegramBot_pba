@@ -41,7 +41,7 @@ export const handler: Handler = async (request: object) => {
   let temp = JSON.parse(request.body);
   console.log("printing inside handler", temp.message.text);
 
-  postToDB(temp.message);
+  postToDB(temp);
   return {
     statusCode: 200,
   };
