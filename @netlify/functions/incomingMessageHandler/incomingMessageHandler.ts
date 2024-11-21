@@ -35,13 +35,12 @@ export interface From {
 }
 // make a mondo db call
 async function postToDB(data: Body) {
-  console.log("message we receive from instagram", data.message.text);
+  console.log("message we receive from Telegram", data.message.text);
 }
 export const handler: Handler = async (request: object) => {
-  let temp = JSON.parse(request.body);
-  console.log("printing inside handler", temp.message.text);
+  let postData: Body = JSON.parse(request.body);
 
-  postToDB(temp);
+  postToDB(postData);
   return {
     statusCode: 200,
   };
