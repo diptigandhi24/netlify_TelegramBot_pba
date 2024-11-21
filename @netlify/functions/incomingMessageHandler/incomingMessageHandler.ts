@@ -5,11 +5,39 @@ const mongoClient = new MongoClient(process.env.MONGODB_URI);
 const myDB = mongoClient.db("pba");
 const myColl = myDB.collection("parents_questions");
 
-// make a mondo db call
-async function postToDB(data) {
-  console.log("message we receive from instagram", data);
+export interface Body {
+  update_id: number;
+  message: Message;
 }
-export const handler: Handler = async (request) => {
+
+export interface Message {
+  message_id: number;
+  from: From;
+  chat: Chat;
+  date: number;
+  text: string;
+}
+
+export interface Chat {
+  id: number;
+  title: string;
+  type: string;
+  all_members_are_administrators: boolean;
+}
+
+export interface From {
+  id: number;
+  is_bot: boolean;
+  first_name: string;
+  last_name: string;
+  username: string;
+  language_code: string;
+}
+// make a mondo db call
+async function postToDB(data: Body) {
+  console.log("message we receive from instagram", data.message.text);
+}
+export const handler: Handler = async (request: object) => {
   let temp = JSON.parse(request.body);
   console.log("printing inside handler", temp.message.text);
 
