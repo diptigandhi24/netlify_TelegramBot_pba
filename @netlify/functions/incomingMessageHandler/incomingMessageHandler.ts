@@ -38,6 +38,7 @@ async function postToDB(data: Body) {
   const doc = { name: "Neapolitan pizza", shape: "round" };
   try {
     const myDB = await clientPromise.db("pba");
+    console.log("myDB", myDB);
     const myColl = myDB.collection("parents_questions");
     const result = await myColl.insertOne(doc);
     console.log("Data is saved to db", result.insertedId);
