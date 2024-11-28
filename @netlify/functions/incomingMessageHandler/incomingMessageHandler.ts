@@ -49,12 +49,14 @@ async function postToDB(data: Body) {
       `A MongoBulkWriteException occurred, but there are successfully processed documents.`,
       e
     );
+  } finally {
+    console.log("Run complete");
   }
 }
 export const handler: Handler = async (request: object) => {
   let postData: Body = JSON.parse(request.body);
 
-  postToDB(postData);
+  await postToDB(postData);
 
   return {
     statusCode: 200,
