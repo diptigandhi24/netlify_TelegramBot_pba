@@ -2,7 +2,6 @@ import { Handler } from "@netlify/functions";
 const { MongoClient } = require("mongodb");
 
 const mongoClient = new MongoClient(process.env.MONGODB_URI);
-const clientPromise = mongoClient.connect();
 
 export interface Body {
   update_id: number;
@@ -37,7 +36,7 @@ async function postToDB(data: Body) {
   console.log("message we receive from Telegram", data.message.text);
   const doc = { name: "Neapolitan pizza", shape: "round" };
   try {
-    const myDB = await clientPromise.db("pba");
+    const myDB = await mongoClient.db("pba");
     console.log("myDB", myDB);
     const myColl = myDB.collection("parents_questions");
     const result = await myColl.insertOne(doc);
