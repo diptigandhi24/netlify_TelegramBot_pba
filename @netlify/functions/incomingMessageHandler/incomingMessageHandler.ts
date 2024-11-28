@@ -2,7 +2,8 @@ import { Handler } from "@netlify/functions";
 const { MongoClient } = require("mongodb");
 
 const mongoClient = new MongoClient(process.env.MONGODB_URI);
-const myDB = mongoClient.db("pba");
+const clientPromise = mongoClient.connect();
+const myDB = (await clientPromise).db("pba");
 const myColl = myDB.collection("parents_questions");
 
 export interface Body {
