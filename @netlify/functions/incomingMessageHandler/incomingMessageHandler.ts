@@ -33,9 +33,12 @@ export interface From {
   username: string;
   language_code: string;
 }
-// make a mondo db call
+// make a mongo db call
 async function postToDB(data: Body) {
   console.log("message we receive from Telegram", data.message.text);
+  const doc = { name: "Neapolitan pizza", shape: "round" };
+  const result = await myColl.insertOne(doc);
+  console.log("Data is saved to db");
 }
 export const handler: Handler = async (request: object) => {
   let postData: Body = JSON.parse(request.body);
