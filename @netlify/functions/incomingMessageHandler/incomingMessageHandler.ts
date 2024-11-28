@@ -37,8 +37,15 @@ export interface From {
 async function postToDB(data: Body) {
   console.log("message we receive from Telegram", data.message.text);
   const doc = { name: "Neapolitan pizza", shape: "round" };
-  const result = await myColl.insertOne(doc);
-  console.log("Data is saved to db");
+  try {
+    const result = await myColl.insertOne(doc);
+    console.log("Data is saved to db", result.insertedId);
+  } catch (e) {
+    console.log(
+      `A MongoBulkWriteException occurred, but there are successfully processed documents.`,
+      e
+    );
+  }
 }
 export const handler: Handler = async (request: object) => {
   let postData: Body = JSON.parse(request.body);
