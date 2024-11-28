@@ -39,6 +39,7 @@ async function postToDB(data: Body) {
     const myDB = await mongoClient.db("pba");
     console.log("myDB", myDB);
     const myColl = myDB.collection("parents_questions");
+    console.log("collection", myColl);
     const result = await myColl.insertOne(doc);
     console.log("Data is saved to db", result.insertedId);
   } catch (e) {
