@@ -33,17 +33,11 @@ export interface From {
 }
 // make a mongo db call
 async function postToDB(data: Body) {
-  console.log("message we receive from Telegram", data.message.text);
-  const doc = { name: "async Dipti pizza", shape: "starfish" };
+  const question = data.message.text;
   try {
     const myDB = await mongoClient.db("pba");
-    // console.log("myDB", myDB);
     const myColl = myDB.collection("parents_questions");
-    console.log("collection", myColl);
-    console.log(`About to insert ${doc}`);
-    const result = await myColl.insertOne(doc);
-    console.log(`Insert completed`);
-    console.log("Data is saved to db", result.insertedId);
+    const result = await myColl.insertOne(question);
   } catch (e) {
     console.log(
       `A MongoBulkWriteException occurred, but there are successfully processed documents.`,
