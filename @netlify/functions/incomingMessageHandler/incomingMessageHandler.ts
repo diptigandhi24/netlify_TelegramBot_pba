@@ -3,8 +3,6 @@ const { MongoClient } = require("mongodb");
 
 const mongoClient = new MongoClient(process.env.MONGODB_URI);
 const clientPromise = mongoClient.connect();
-const myDB = clientPromise.db("pba");
-const myColl = myDB.collection("parents_questions");
 
 export interface Body {
   update_id: number;
@@ -39,6 +37,8 @@ async function postToDB(data: Body) {
   console.log("message we receive from Telegram", data.message.text);
   const doc = { name: "Neapolitan pizza", shape: "round" };
   try {
+    const myDB = await clientPromise.db("pba");
+    const myColl = myDB.collection("parents_questions");
     const result = await myColl.insertOne(doc);
     console.log("Data is saved to db", result.insertedId);
   } catch (e) {
