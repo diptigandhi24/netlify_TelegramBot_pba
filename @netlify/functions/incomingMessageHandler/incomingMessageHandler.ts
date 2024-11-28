@@ -34,12 +34,12 @@ export interface From {
 // make a mongo db call
 async function postToDB(data: Body) {
   console.log("message we receive from Telegram", data.message.text);
-  const doc = { name: "Neapolitan pizza", shape: "round" };
+  const doc = { name: "async Dipti pizza", shape: "starfish" };
   try {
     const myDB = await mongoClient.db("pba");
     // console.log("myDB", myDB);
     const myColl = myDB.collection("parents_questions");
-    // console.log("collection", myColl);
+    console.log("collection", myColl);
     console.log(`About to insert ${doc}`);
     const result = await myColl.insertOne(doc);
     console.log(`Insert completed`);
@@ -55,6 +55,7 @@ export const handler: Handler = async (request: object) => {
   let postData: Body = JSON.parse(request.body);
 
   postToDB(postData);
+
   return {
     statusCode: 200,
   };
