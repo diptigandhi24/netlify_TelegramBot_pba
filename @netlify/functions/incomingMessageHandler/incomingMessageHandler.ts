@@ -41,7 +41,7 @@ async function postToDB(data: Body) {
     const myColl = myDB.collection("parents_questions");
     // console.log("collection", myColl);
     console.log(`About to insert ${doc}`);
-    const result = await myColl.insert(doc);
+    const result = await myColl.insertOne(doc);
     console.log(`Insert completed`);
     console.log("Data is saved to db", result.insertedId);
   } catch (e) {
