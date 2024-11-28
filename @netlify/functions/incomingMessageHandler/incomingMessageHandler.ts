@@ -37,10 +37,12 @@ async function postToDB(data: Body) {
   const doc = { name: "Neapolitan pizza", shape: "round" };
   try {
     const myDB = await mongoClient.db("pba");
-    console.log("myDB", myDB);
+    // console.log("myDB", myDB);
     const myColl = myDB.collection("parents_questions");
-    console.log("collection", myColl);
-    const result = await myColl.insertOne(doc);
+    // console.log("collection", myColl);
+    console.log(`About to insert ${doc}`);
+    const result = await myColl.insert(doc);
+    console.log(`Insert completed`);
     console.log("Data is saved to db", result.insertedId);
   } catch (e) {
     console.log(
