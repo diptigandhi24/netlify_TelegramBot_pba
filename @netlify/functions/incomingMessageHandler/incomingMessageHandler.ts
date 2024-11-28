@@ -3,7 +3,7 @@ const { MongoClient } = require("mongodb");
 
 const mongoClient = new MongoClient(process.env.MONGODB_URI);
 const clientPromise = mongoClient.connect();
-const myDB = await clientPromise.db("pba");
+const myDB = clientPromise.db("pba");
 const myColl = myDB.collection("parents_questions");
 
 export interface Body {
