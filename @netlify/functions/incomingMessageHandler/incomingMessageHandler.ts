@@ -1,4 +1,5 @@
 import { Handler } from "@netlify/functions";
+import { Body, PostToDB, AiResponse } from "../../../messageTypes";
 const { MongoClient } = require("mongodb");
 
 const mongoClient = new MongoClient(process.env.MONGODB_URI);
@@ -32,7 +33,7 @@ export interface From {
   language_code: string;
 }
 // make a mongo db call
-async function postToDB(data: Body) {
+async function postToMongoDB(data: PostToDB) {
   const question = data.message.text;
   try {
     const myDB = await mongoClient.db("pba");
