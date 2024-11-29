@@ -28,9 +28,7 @@ async function postToMongoDB(data: PostToDB) {
 
 async function getResponsefromAi(question: string): Promise<AiResponse> {
   try {
-    let r = await getResponse(
-      "Hi, I’m curious to know if, any of you have the preference to eat same food everyday? My son wants to eat same food every single time.. I wonder why don’t he get bored of it…"
-    );
+    let r = await getResponse(question);
     console.log(JSON.stringify(r));
     return {
       statusCode: 200,
