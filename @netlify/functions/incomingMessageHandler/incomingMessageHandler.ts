@@ -7,11 +7,15 @@ const mongoClient = new MongoClient(process.env.MONGODB_URI);
 
 // make a mongo db call
 async function postToMongoDB(data: PostToDB) {
-  const question = data.message.text;
+  const question = data.postData.message.text;
+  const aiAnswer = data.aiResponse;
   try {
     const myDB = await mongoClient.db("pba");
     const myColl = myDB.collection("parents_questions");
-    const result = await myColl.insertOne(question);
+    const result = await myColl.insertOne({
+      question: question,
+      aiAnswer: aiAnswer,
+    });
   } catch (e) {
     console.log(
       `A MongoBulkWriteException occurred, but there are successfully processed documents.`,
