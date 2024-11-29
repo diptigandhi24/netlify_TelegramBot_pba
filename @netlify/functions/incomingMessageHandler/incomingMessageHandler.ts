@@ -1,37 +1,10 @@
 import { Handler } from "@netlify/functions";
+import { getResponse } from "../../../gpt/gemini";
 import { Body, PostToDB, AiResponse } from "../../../messageTypes";
 const { MongoClient } = require("mongodb");
 
 const mongoClient = new MongoClient(process.env.MONGODB_URI);
 
-export interface Body {
-  update_id: number;
-  message: Message;
-}
-
-export interface Message {
-  message_id: number;
-  from: From;
-  chat: Chat;
-  date: number;
-  text: string;
-}
-
-export interface Chat {
-  id: number;
-  title: string;
-  type: string;
-  all_members_are_administrators: boolean;
-}
-
-export interface From {
-  id: number;
-  is_bot: boolean;
-  first_name: string;
-  last_name: string;
-  username: string;
-  language_code: string;
-}
 // make a mongo db call
 async function postToMongoDB(data: PostToDB) {
   const question = data.message.text;
@@ -48,10 +21,33 @@ async function postToMongoDB(data: PostToDB) {
     console.log("Run complete");
   }
 }
+
+async function getResponsefromAi(question: string): Promise<AiResponse> {
+  try {
+    let r = await getResponse(
+      "Hi, I’m curious to know if, any of you have the preference to eat same food everyday? My son wants to eat same food every single time.. I wonder why don’t he get bored of it…"
+    );
+    console.log(JSON.stringify(r));
+    return {
+      statusCode: 200,
+      response: JSON.stringify(r),
+    };
+  } catch (e) {
+    return {
+      statusCode: 500,
+      response: "Please try again in sometime",
+    };
+  }
+}
 export const handler: Handler = async (request: object) => {
   let postData: Body = JSON.parse(request.body);
-
-  await postToDB(postData);
+  let aiAnswer: { statusCode: number; response: string } =
+    await getResponsefromAi(postData.message.text);
+  if (aiAnswer.statusCode === 200) {
+    let aiResponse: string = aiAnswer.response;
+    let postToDB: PostToDB = { postData, aiResponse };
+    await postToMongoDB(postToDB);
+  }
 
   return {
     statusCode: 200,
