@@ -1,4 +1,3 @@
-import * as mongoDB from "mongodb";
 export interface Body {
   update_id: number;
   message: Message;
