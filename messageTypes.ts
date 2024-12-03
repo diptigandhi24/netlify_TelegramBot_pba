@@ -1,3 +1,4 @@
+import * as mongoDB from "mongodb";
 export interface Body {
   update_id: number;
   message: Message;
@@ -32,4 +33,9 @@ export interface From {
 export interface AiResponse {
   statusCode: number;
   response: string;
+}
+
+export interface QuestionAnswer {
+  question: string;
+  aiAnswer: string;
 }

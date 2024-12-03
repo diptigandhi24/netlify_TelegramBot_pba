@@ -2,16 +2,16 @@ import { Handler } from "@netlify/functions";
 import { getResponse } from "../../../gpt/gemini";
 import { Body, PostToDB, AiResponse } from "../../../messageTypes";
 const { MongoClient } = require("mongodb");
-
-const mongoClient = new MongoClient(process.env.MONGODB_URI);
+import { getCollection } from "../../../collectionInstance";
+import * as mongoDB from "mongodb";
+import { QuestionAnswer } from "../../../messageTypes";
 
 // make a mongo db call
 async function postToMongoDB(data: PostToDB) {
   const question = data.postData.message.text;
   const aiAnswer = data.aiResponse;
   try {
-    const myDB = await mongoClient.db("pba");
-    const myColl = myDB.collection("parents_questions");
+    const myColl: mongoDB.Collection<QuestionAnswer> = await getCollection();
     const result = await myColl.insertOne({
       question: question,
       aiAnswer: aiAnswer,
