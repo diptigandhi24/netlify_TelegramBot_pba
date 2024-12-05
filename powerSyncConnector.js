@@ -1,11 +1,6 @@
 import { UpdateType } from "@powersync/web";
 
 export class Connector {
-  constructor() {
-    // Setup a connection to your server for uploads
-    this.serverConnectionClient = TODO;
-  }
-
   async fetchCredentials() {
     // Implement fetchCredentials to obtain a JWT from your authentication service.
     // See https://docs.powersync.com/installation/authentication-setup

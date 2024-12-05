@@ -1,5 +1,5 @@
 import { PowerSyncDatabase } from "@powersync/web";
-import { Connector } from "./powerSyncConnector";
+import { Connector } from "./powerSyncConnector.js";
 import { AppSchema } from "./localSchema/AppSchema";
 
 export const db = new PowerSyncDatabase({
