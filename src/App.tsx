@@ -1,6 +1,5 @@
 import { db as powerSync } from "../powerSyncInstance";
 import { Connector } from "../powerSyncConnector";
-import { usePowerSync } from "@powersync/react";
 import { PowerSyncContext } from "@powersync/react";
 import React, { Suspense, useEffect } from "react";
 // import { TodoListDisplay } from "./test.jsx";
@@ -12,35 +11,21 @@ import { useStatus } from "@powersync/react";
 const setupPowerSync = async () => {
   // Uses the backend connector that will be created in the next section
   const connector = new Connector();
-  await powerSync.connect(connector);
+  powerSync.connect(connector).then(
+    () => {
+      console.log(`Complete ${powerSync.connected}`);
+    },
+    (reason) => console.log(reason)
+  );
   console.log("POWERSYNC", powerSync.connected);
 };
 setupPowerSync();
 
 // Get all list IDs
-export const getLists = async () => {
+export const getPbaQuestionsAnswers = async () => {
   const results = await powerSync.getAll("SELECT * FROM parents_questions");
   console.log("results", results);
   return results;
-};
-
-const TodoListDisplay = () => {
-  const powersync = usePowerSync();
-
-  const [lists, setLists] = React.useState([]);
-
-  React.useEffect(() => {
-    powersync.getAll("SELECT * FROM parents_questions").then(setLists);
-    console.log("list isss", lists, powerSync);
-  }, []);
-
-  return (
-    <ul>
-      {lists.map((list) => (
-        <li key={list.id}>{list.name}</li>
-      ))}
-    </ul>
-  );
 };
 
 const Component = () => {

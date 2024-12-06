@@ -4,9 +4,8 @@ import { column, Schema, Table } from "@powersync/web";
 const parents_questions = new Table(
   {
     // id column (text) is automatically included
-    _id: column.text,
-    aiAnswer: column.text,
     question: column.text,
+    aiAnswer: column.text,
   },
   { indexes: {} }
 );
