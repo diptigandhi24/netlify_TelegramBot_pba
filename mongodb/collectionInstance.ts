@@ -1,6 +1,6 @@
 const { MongoClient } = require("mongodb");
 import * as mongoDB from "mongodb";
-import { QuestionAnswer } from "./messageTypes";
+import { QuestionAnswer } from "../netlifyUtility/messageTypes";
 const mongoClient = new MongoClient(process.env.MONGODB_URI);
 
 export async function getCollection(): Promise<

@@ -1,25 +1,15 @@
-import { db as powerSync } from "../powerSyncInstance";
-import { Connector } from "../powerSyncConnector";
+import { db as powerSync } from "../powersync/powerSyncInstance";
+import { PowerSyncDatabase } from "@powersync/web";
+import { Connector } from "../powersync/powerSyncConnector";
 import { PowerSyncContext } from "@powersync/react";
 import React, { Suspense, useEffect } from "react";
 // import { TodoListDisplay } from "./test.jsx";
-import { useStatus } from "@powersync/react";
+import { AppSchema } from "../localSchema/AppSchema";
+import SystemProvider from "./provider";
+import { useQuery, useStatus } from "@powersync/react";
 
-// const connector = new Connector();
-// console.log("DataBase", powerSync.database);
-// powerSync.connect(connector);
-const setupPowerSync = async () => {
-  // Uses the backend connector that will be created in the next section
-  const connector = new Connector();
-  powerSync.connect(connector).then(
-    () => {
-      console.log(`Complete ${powerSync.connected}`);
-    },
-    (reason) => console.log(reason)
-  );
-  console.log("POWERSYNC", powerSync.connected);
-};
-setupPowerSync();
+const connector = new Connector();
+powerSync.connect(connector);
 
 // Get all list IDs
 export const getPbaQuestionsAnswers = async () => {
@@ -27,31 +17,29 @@ export const getPbaQuestionsAnswers = async () => {
   console.log("results", results);
   return results;
 };
-
+// getPbaQuestionsAnswers();
 const Component = () => {
-  console.log("PowerSYnc", powerSync, powerSync.connected);
-  const [connected, setConnected] = React.useState(powerSync.connected);
-  React.useEffect(() => {
-    // Register listener for changes made to the powersync status
-    return powerSync.registerListener({
-      statusChanged: (status) => {
-        setConnected(status.connected);
-      },
-    });
-  }, [powerSync]);
+  const status = useStatus();
+  const data = useQuery("SELECT * FROM parents_questions");
 
-  return (
-    <>
-      <div> `${connected ? "Connected" : "Disconnected"}`</div>
-    </>
-  );
+  if (status.hasSynced && data.data.length !== 0) {
+    return (
+      <div>
+        {data.data.map((item, index) => (
+          <p key={index}>{item.question}</p>
+        ))}
+      </div>
+    );
+  } else {
+    return <h1>not Sync</h1>;
+  }
 };
 
 function App() {
   return (
-    <PowerSyncContext.Provider value={powerSync}>
+    <SystemProvider>
       <Component />
-    </PowerSyncContext.Provider>
+    </SystemProvider>
   );
 }
 

@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "collectionInstance.ts"]
+  "include": ["src", "mongodb/collectionInstance.ts"]
 }
