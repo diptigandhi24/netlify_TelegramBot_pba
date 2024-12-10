@@ -13,10 +13,10 @@ export class Connector {
     };
   }
 
-  // async uploadData(database) {
-  //   console.log("Trying to upload n");
-  //   // Implement uploadData to send local changes to your backend service.
-  //   // You can omit this method if you only want to sync data from the database to the client
-  //   // See example implementation here: https://docs.powersync.com/client-sdk-references/javascript-web#3-integrate-with-your-backend
-  // }
+  async uploadData() {
+    console.log("Trying to upload n");
+    // Implement uploadData to send local changes to your backend service.
+    // You can omit this method if you only want to sync data from the database to the client
+    // See example implementation here: https://docs.powersync.com/client-sdk-references/javascript-web#3-integrate-with-your-backend
+  }
 }

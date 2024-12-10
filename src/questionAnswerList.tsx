@@ -15,7 +15,7 @@ function QuestionAnswerComponent({
   let [isSave, updateSave] = useState(false);
   const powerSync = usePowerSync();
 
-  function handleEdit(e) {
+  function handleEdit(e: React.ChangeEvent<HTMLTextAreaElement>): void {
     updateAiAnswer(() => e.target.value);
   }
 

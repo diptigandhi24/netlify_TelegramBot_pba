@@ -1,5 +1,4 @@
 import SystemProvider from "./provider";
-import { useQuery, useStatus } from "@powersync/react";
 import DisplayQuestionAnswerList from "./questionAnswerList";
 
 function App() {
