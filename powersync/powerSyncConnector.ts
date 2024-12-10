@@ -1,3 +1,5 @@
+import { AbstractPowerSyncDatabase } from "@powersync/web";
+
 export class Connector {
   async fetchCredentials() {
     // Implement fetchCredentials to obtain a JWT from your authentication service.
@@ -13,8 +15,44 @@ export class Connector {
     };
   }
 
-  async uploadData() {
+  async uploadData(database: AbstractPowerSyncDatabase) {
+    const transaction = await database.getNextCrudTransaction();
+    if (!transaction) {
+      return;
+    }
     console.log("Trying to upload n");
+    try {
+      let batch: any[] = [];
+      for (let operation of transaction.crud) {
+        let payload = {
+          op: operation.op,
+          table: operation.table,
+          id: operation.id,
+          data: operation.opData,
+        };
+        batch.push(payload);
+        const response = await fetch(
+          `https://telegrambot-pba.netlify.app/.netlify/functions/updateData`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ batch }),
+          }
+        );
+        if (!response.ok) {
+          throw new Error(
+            `Received ${
+              response.status
+            } from /api/data: ${await response.text()}`
+          );
+        }
+      }
+    } catch (ex: any) {
+      console.debug(ex);
+      throw ex;
+    }
     // Implement uploadData to send local changes to your backend service.
     // You can omit this method if you only want to sync data from the database to the client
     // See example implementation here: https://docs.powersync.com/client-sdk-references/javascript-web#3-integrate-with-your-backend
