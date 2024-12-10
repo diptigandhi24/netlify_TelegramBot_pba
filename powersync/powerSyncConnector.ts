@@ -48,6 +48,7 @@ export class Connector {
             } from /api/data: ${await response.text()}`
           );
         }
+        await transaction.complete();
       }
     } catch (ex: any) {
       console.debug(ex);
