@@ -38,3 +38,20 @@ export interface QuestionAnswer {
   question: string;
   aiAnswer: string;
 }
+// {"batch":[{"op":"PATCH","table":"parents_questions","id":"67496671125ef5d85c686c65","data":{"aiAnswer":"this change came from Dipti"}}]}
+export interface UpdateRequestionBody {
+  batch: UpdateBatch;
+}
+export interface UpdateBatchObject {
+  batch: Array<UpdateBatch>;
+}
+export interface UpdateBatch {
+  op: string;
+  table: string;
+  id: string;
+  data: UpdateBatchData;
+}
+
+export interface UpdateBatchData {
+  aiAnswer: string;
+}
