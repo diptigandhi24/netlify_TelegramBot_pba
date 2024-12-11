@@ -6,7 +6,7 @@ const headers = {
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
 };
 export const handler: Handler = async (request: object) => {
-  console.log("Update function is active", request.body.batch);
+  console.log("Update function is active", request, request.body);
   return {
     statusCode: 200,
     headers,
