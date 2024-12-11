@@ -1,10 +1,12 @@
 import { Handler } from "@netlify/functions";
 import { UpdateRequestionBody } from "../../../netlifyUtility/messageTypes";
 import { UpdateTableValue } from "../../../netlifyUtility/netlifyUtilityFunctions";
+
 const headers = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "Content-Type",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Origin": "http://localhost:5173", // Allow your development origin
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS", // Allow specific HTTP methods
+  "Access-Control-Allow-Headers": "Content-Type, Authorization", // Allow specific headers
+  "Access-Control-Max-Age": "86400", // Cache preflight request for 24 hours
 };
 export const handler: Handler = async (request: object) => {
   let postData: UpdateRequestionBody = JSON.parse(request.body);
